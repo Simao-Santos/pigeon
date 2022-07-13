@@ -5,6 +5,8 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:path_provider/path_provider.dart';
 
 class Recording extends StatelessWidget {
   const Recording({Key? key}) : super(key: key);
@@ -24,45 +26,87 @@ class RecordingLogic extends StatefulWidget {
 
 class _RecordingLogicState extends State<RecordingLogic> {
   bool _isRecording = false;
-  bool _isPaused = false;
   int _recordDuration = 0;
   Timer? _timer;
   final _audioRecorder = FlutterSoundRecorder();
 
   Future<void> _start() async {
-    await _audioRecorder.openRecorder();
+    print("BANANANAS");
 
-    bool isRecording = _audioRecorder.isRecording;
+    if (await Permission.microphone.request().isDenied && await Permission.storage.request().isDenied) {
+      try {
+        throw RecordingPermissionException("Microphone or storage permission not granted");
+      } catch (e) {
+        AlertDialog(
+          title: const Text("Permissions Denied."),
+          actions: [
+            TextButton(
+              onPressed: () {},
+              child: const Text(
+                "OK",
+                style: const TextStyle(color: Colors.blue),
+              ),
+            )
+          ],
+        );
+      }
+    } else {
+      await _audioRecorder.openRecorder();
+      print("abriu recorder");
 
-    setState(() {
-      _isRecording = isRecording;
-      _recordDuration = 0;
-    });
+      final directory = await getExternalStorageDirectory();
+      String? _path = directory?.path; // instead of "/storage/emulated/0"
+      print(_path);
 
-    _startTimer();
+      DateTime now = DateTime.now();
+      String filename = "/" +
+          now.day.toString() +
+          "-" +
+          now.month.toString() +
+          "-" +
+          now.year.toString() +
+          "-" +
+          now.hour.toString() +
+          ":" +
+          now.minute.toString() +
+          ".aac";
+
+      await _audioRecorder.startRecorder(toFile: _path! + filename);
+      bool isRecording = _audioRecorder.isRecording;
+      print("começou a gravar");
+
+      setState(() {
+        _isRecording = isRecording;
+        _recordDuration = 0;
+      });
+
+      _startTimer();
+    }
   }
 
   Future<void> _stop() async {
     _timer?.cancel();
     final path = await _audioRecorder.stopRecorder();
+    print(path);
 
     if (kDebugMode) {
       print('audio saved here: ' + path!);
     }
 
     setState(() => _isRecording = false);
+    _audioRecorder.closeRecorder();
   }
 
   Widget _buildRecordStopControl() {
     late Icon icon;
     late Color color;
 
-    if (_isRecording || _isPaused) {
-      icon = const Icon(Icons.stop, color: Colors.red, size: 30);
+    if (_isRecording) {
+      icon = const Icon(Icons.mic, color: Colors.red, size: 30);
       color = Colors.red.withOpacity(0.1);
     } else {
       final theme = Theme.of(context);
-      icon = Icon(Icons.mic, color: theme.primaryColor, size: 30);
+      icon = Icon(Icons.mic_none, color: theme.primaryColor, size: 30);
       color = theme.primaryColor.withOpacity(0.1);
     }
 
@@ -91,7 +135,7 @@ class _RecordingLogicState extends State<RecordingLogic> {
   }
 
   Widget _buildText() {
-    if (_isRecording || _isPaused) {
+    if (_isRecording) {
       return _buildTimer();
     }
 
