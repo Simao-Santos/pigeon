@@ -7,14 +7,37 @@ class Contacts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFC7CFD3),
       drawer: const Drawer(),
+      extendBody: true,
       appBar: AppBar(
         backgroundColor: const Color(0xFF113B6B),
         title: const Text('Pigeon'),
       ),
-      body: Container(
-        color: const Color(0xFFC7CFD3),
-        child: const ContactList(),
+      body: const ContactList(),
+      bottomNavigationBar: Container(
+        margin: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+        child: ClipRRect(
+          borderRadius: const BorderRadius.all(Radius.circular(50)),
+          child: BottomNavigationBar(
+            backgroundColor: const Color(0x73113B6B),
+            elevation: 0,
+            iconSize: 30,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(icon: Icon(Icons.mic_none, color: Colors.black), label: 'Record'),
+              BottomNavigationBarItem(icon: Icon(Icons.camera, color: Colors.black), label: 'Photography'
+                  // activeIcon: Camera()
+                  ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.videocam, color: Colors.black),
+                label: 'Video',
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -79,7 +102,7 @@ class _ContactListState extends State<ContactList> {
                   child: const ImageIcon(AssetImage("assets/contact.png"), size: 40),
                   margin: const EdgeInsets.only(right: 10),
                 ),
-                title: const Text('Mãe'),
+                title: const Text('Gonçalo Marantes'),
                 subtitle: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: const <Widget>[
@@ -114,7 +137,7 @@ class _ContactListState extends State<ContactList> {
                   child: const ImageIcon(AssetImage("assets/contact.png"), size: 40),
                   margin: const EdgeInsets.only(right: 10),
                 ),
-                title: const Text('Mãe'),
+                title: const Text('Ana Pereira'),
                 subtitle: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: const <Widget>[
