@@ -30,6 +30,13 @@ class _RecordingLogicState extends State<RecordingLogic> {
   Timer? _timer;
   final _audioRecorder = FlutterSoundRecorder();
 
+  @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
   Future<void> _start() async {
     print("BANANANAS");
 
@@ -99,27 +106,19 @@ class _RecordingLogicState extends State<RecordingLogic> {
 
   Widget _buildRecordStopControl() {
     late Icon icon;
-    late Color color;
 
     if (_isRecording) {
       icon = const Icon(Icons.mic, color: Colors.red, size: 30);
-      color = Colors.red.withOpacity(0.1);
     } else {
-      final theme = Theme.of(context);
-      icon = Icon(Icons.mic_none, color: theme.primaryColor, size: 30);
-      color = theme.primaryColor.withOpacity(0.1);
+      icon = const Icon(Icons.mic_none, color: Colors.black, size: 30);
     }
 
-    return ClipOval(
-      child: Material(
-        color: color,
-        child: InkWell(
-          child: SizedBox(width: 56, height: 56, child: icon),
-          onTap: () {
-            _isRecording ? _stop() : _start();
-          },
-        ),
-      ),
+    return InkWell(
+      borderRadius: const BorderRadius.all(Radius.circular(50)),
+      child: SizedBox(child: icon),
+      onTap: () {
+        _isRecording ? _stop() : _start();
+      },
     );
   }
 

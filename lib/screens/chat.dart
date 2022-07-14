@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../functions/recording.dart';
 
@@ -8,7 +7,9 @@ class Chat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       appBar: AppBar(
+        backgroundColor: const Color(0xFF113B6B),
         leading: Align(
             alignment: Alignment.centerLeft,
             child: IconButton(
@@ -23,7 +24,9 @@ class Chat extends StatelessWidget {
         title: Row(
           children: const <Widget>[
             Align(
-              child: Icon(Icons.contact_mail),
+              child: ImageIcon(
+                AssetImage("assets/contact.png"),
+              ),
             ),
             Padding(
               padding: EdgeInsets.all(16.0),
@@ -32,25 +35,32 @@ class Chat extends StatelessWidget {
           ],
         ),
       ),
-      body: Container(),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.amber,
-        elevation: 0,
-        iconSize: 30,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-              icon: Icon(Icons.mic), label: 'Record', activeIcon: Recording()),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.camera),
-            label: 'Photography',
+      body: Container(
+        color: const Color(0xFFC7CFD3),
+      ),
+      bottomNavigationBar: Container(
+        margin: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+        child: ClipRRect(
+          borderRadius: const BorderRadius.all(Radius.circular(50)),
+          child: BottomNavigationBar(
+            backgroundColor: const Color(0x73113B6B),
+            elevation: 0,
+            iconSize: 30,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(icon: Icon(Icons.mic), label: 'Record', activeIcon: Recording()),
+              BottomNavigationBarItem(icon: Icon(Icons.camera), label: 'Photography', backgroundColor: Colors.black
+                  // activeIcon: Camera()
+                  ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.videocam),
+                label: 'Video',
+              ),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.videocam),
-            label: 'Video',
-          ),
-        ],
+        ),
       ),
     );
   }

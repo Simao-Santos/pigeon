@@ -9,10 +9,12 @@ class Contacts extends StatelessWidget {
     return Scaffold(
       drawer: const Drawer(),
       appBar: AppBar(
+        backgroundColor: const Color(0xFF113B6B),
         title: const Text('Pigeon'),
       ),
-      body: const Center(
-        child: ContactList(),
+      body: Container(
+        color: const Color(0xFFC7CFD3),
+        child: const ContactList(),
       ),
     );
   }
@@ -26,39 +28,119 @@ class ContactList extends StatefulWidget {
 }
 
 class _ContactListState extends State<ContactList> {
-  // nome dos contactos vem da base de dados
-
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.all(16.0),
-      children: <Widget>[
-        ListTile(
-            leading: const Icon(Icons.contact_mail),
-            title: const Text('Mãe'),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const Chat()),
-              );
-            }),
-        const Divider(),
-        ListTile(
-            leading: const Icon(Icons.contact_mail),
-            title: const Text('Gonçalo'),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const Chat()),
-              );
-            }),
-        const Divider(),
-        const ListTile(
-          leading: Icon(Icons.contact_mail),
-          title: Text('Ana'),
-        ),
-        const Divider()
-      ],
+    return Padding(
+      padding: const EdgeInsets.only(top: 10),
+      child: ListView(
+        children: <Widget>[
+          Container(
+            color: const Color(0xFF113B6B),
+            margin: const EdgeInsets.only(bottom: 5),
+            child: ListTile(
+                textColor: Colors.white,
+                iconColor: Colors.white,
+                leading: Container(
+                  child: const ImageIcon(AssetImage("assets/contact.png"), size: 40),
+                  margin: const EdgeInsets.only(right: 10),
+                ),
+                title: const Text('Mãe'),
+                subtitle: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const <Widget>[
+                    ImageIcon(AssetImage("assets/audio_pigeon.png"), color: Color(0xFF6FCF97), size: 40),
+                    ImageIcon(AssetImage("assets/photo_pigeon.png"), color: Color(0x7356CCF2), size: 40),
+                    ImageIcon(
+                      AssetImage("assets/video_pigeon.png"),
+                      color: Color(0xFFF2994A),
+                      size: 40,
+                    )
+                  ],
+                ),
+                trailing: Column(
+                  children: const [
+                    Text("16:05"),
+                  ],
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const Chat()),
+                  );
+                }),
+          ),
+          Container(
+            color: const Color(0xFF113B6B),
+            margin: const EdgeInsets.only(bottom: 5),
+            child: ListTile(
+                textColor: Colors.white,
+                iconColor: Colors.white,
+                leading: Container(
+                  child: const ImageIcon(AssetImage("assets/contact.png"), size: 40),
+                  margin: const EdgeInsets.only(right: 10),
+                ),
+                title: const Text('Mãe'),
+                subtitle: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const <Widget>[
+                    ImageIcon(AssetImage("assets/audio_pigeon.png"), color: Color(0xFF6FCF97), size: 40),
+                    ImageIcon(AssetImage("assets/photo_pigeon.png"), color: Color(0x7356CCF2), size: 40),
+                    ImageIcon(
+                      AssetImage("assets/video_pigeon.png"),
+                      color: Color(0xFFF2994A),
+                      size: 40,
+                    )
+                  ],
+                ),
+                trailing: Column(
+                  children: const [
+                    Text("16:05"),
+                  ],
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const Chat()),
+                  );
+                }),
+          ),
+          Container(
+            color: const Color(0xFF113B6B),
+            margin: const EdgeInsets.only(bottom: 5),
+            child: ListTile(
+                textColor: Colors.white,
+                iconColor: Colors.white,
+                leading: Container(
+                  child: const ImageIcon(AssetImage("assets/contact.png"), size: 40),
+                  margin: const EdgeInsets.only(right: 10),
+                ),
+                title: const Text('Mãe'),
+                subtitle: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const <Widget>[
+                    ImageIcon(AssetImage("assets/audio_pigeon.png"), color: Color(0xFF6FCF97), size: 40),
+                    ImageIcon(AssetImage("assets/photo_pigeon.png"), color: Color(0x7356CCF2), size: 40),
+                    ImageIcon(
+                      AssetImage("assets/video_pigeon.png"),
+                      color: Color(0xFFF2994A),
+                      size: 40,
+                    )
+                  ],
+                ),
+                trailing: Column(
+                  children: const [
+                    Text("16:05"),
+                  ],
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const Chat()),
+                  );
+                }),
+          ),
+        ],
+      ),
     );
   }
 }
