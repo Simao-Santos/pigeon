@@ -3,16 +3,12 @@
 import 'package:flutter/material.dart';
 import '../components/audio_pigeon.dart';
 import '../functions/recording.dart';
-import 'package:path_provider/path_provider.dart';
-import 'dart:io' as io;
 
-class Chat extends StatefulWidget {
+class Chat extends StatelessWidget {
   const Chat({Key? key}) : super(key: key);
 
   @override
-  Future<Widget> build(BuildContext context) async {
-    int numberAudios = 0;
-
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFC7CFD3),
       extendBody: true,
@@ -45,7 +41,7 @@ class Chat extends StatefulWidget {
       ),
       body: Container(
         margin: const EdgeInsets.only(top: 10),
-        child: _GetNumberAudio(),
+        child: Column(children: List<AudioPigeon>.generate(3, (index) => AudioPigeon())),
       ),
       bottomNavigationBar: Container(
         margin: const EdgeInsets.fromLTRB(10, 0, 10, 10),
@@ -84,38 +80,5 @@ class Chat extends StatefulWidget {
         ),
       ),
     );
-  }
-
-  @override
-  State<StatefulWidget> createState() => _GetNumberAudio();
-}
-
-class _GetNumberAudio extends State<Chat> {
-  Future<int> getCounter() async {
-    final directory = getExternalStorageDirectory();
-    final files = io.Directory(directory.toString()).list();
-    final numberAudios = files.length;
-    return numberAudios;
-  }
-
-  Widget _getNumberOfAudios() {
-    FutureBuilder<int>(
-        // assign a function to it (your getCounter method)
-        future: getCounter(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            // print your integer value
-            print(snapshot.data);
-            return Column(children: List<AudioPigeon>.generate(snapshot.data, (index) => AudioPigeon()));
-          } else {
-            return Text(snapshot.error.toString());
-          }
-        });
-    throw Exception();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return _getNumberOfAudios();
   }
 }
