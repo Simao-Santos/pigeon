@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import '../components/audio_pigeon.dart';
 import '../functions/recording.dart';
+import '../functions/number_audios.dart';
 
 class Chat extends StatelessWidget {
   const Chat({Key? key}) : super(key: key);
@@ -41,7 +42,7 @@ class Chat extends StatelessWidget {
       ),
       body: Container(
         margin: const EdgeInsets.only(top: 10),
-        child: Column(children: List<AudioPigeon>.generate(3, (index) => AudioPigeon())),
+        child: NumberAudios(),
       ),
       bottomNavigationBar: Container(
         margin: const EdgeInsets.fromLTRB(10, 0, 10, 10),
